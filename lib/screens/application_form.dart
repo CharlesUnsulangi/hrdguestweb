@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/interview_response.dart';
 import '../utils/validators.dart';
 import '../view_models/application_view_model.dart';
 
@@ -442,7 +441,6 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
               ElevatedButton(
                 onPressed: () async {
                   final ok = await vm.submit();
-                  if (!mounted) return; // avoid using context after async gap
                   if (ok) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -561,17 +559,6 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                // Build a new InterviewResponse and update via view model so changes are tracked
-                final updated = InterviewResponse(
-                  successDescription: successCtrl.text.trim(),
-                  challengeDescription: challengeCtrl.text.trim(),
-                  jobQualityDescription: qualityCtrl.text.trim(),
-                  negativeAspects: negativeCtrl.text.trim(),
-                  positiveAspects: positiveCtrl.text.trim(),
-                  conflictStory: conflictCtrl.text.trim(),
-                  whatAreYouLookingFor: lookingCtrl.text.trim(),
-                );
-                vm.updateInterviewResponse(index, updated);
                 Navigator.of(context).pop();
               },
               child: const Text('Simpan'),
