@@ -35,13 +35,22 @@ cd C:\ProjectSoftwareCWU\flutter\hrdguestweb
 ci_local.bat
 ```
 
-Badge (will work after your first workflow run):
+Badge (will work once you push and Actions run):
+
+[![Flutter CI](https://github.com/CharlesUnsulangi/hrdguestweb/actions/workflows/flutter-ci.yml/badge.svg)](https://github.com/CharlesUnsulangi/hrdguestweb/actions/workflows/flutter-ci.yml)
+
+If you prefer the original badge URL format you can also use:
 
 ```
-[![Flutter CI](https://github.com/<your-org-or-username>/<repo>/actions/workflows/flutter-ci.yml/badge.svg)](https://github.com/<your-org-or-username>/<repo>/actions/workflows/flutter-ci.yml)
+[![Flutter CI](https://github.com/CharlesUnsulangi/hrdguestweb/actions/workflows/flutter-ci.yml/badge.svg)](https://github.com/CharlesUnsulangi/hrdguestweb/actions/workflows/flutter-ci.yml)
 ```
 
-Replace `<your-org-or-username>` and `<repo>` with your repository values.
+After you push changes to GitHub, open:
+
+https://github.com/CharlesUnsulangi/hrdguestweb/actions
+
+to view the workflow runs and download artifacts (the web build is uploaded as an artifact by the
+workflow).
 
 If you want code coverage artifacts locally, run:
 
