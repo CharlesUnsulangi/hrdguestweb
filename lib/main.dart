@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hrdguestweb/screens/application_form.dart';
 import 'package:hrdguestweb/screens/contact_form.dart';
+import 'package:hrdguestweb/screens/landing_screen.dart';
+import 'package:hrdguestweb/screens/pelamar_list_screen.dart';
 import 'package:hrdguestweb/utils/safe_run.dart';
 import 'package:hrdguestweb/utils/validators.dart';
 
@@ -92,9 +94,10 @@ class MyApp extends StatelessWidget {
         // This is the theme of your application.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const LandingScreen(),
       routes: {
         '/apply': (context) => const ApplicationFormScreen(role: 'staff'),
+        '/admin/pelamar': (context) => const PelamarListScreen(),
       },
     );
   }
