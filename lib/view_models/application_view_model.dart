@@ -72,6 +72,26 @@ class ApplicationViewModel extends ChangeNotifier {
     }
   }
 
+  // Social media helpers
+  void addSocial() {
+    application.socialMedia.add(SocialMedia());
+    notifyListeners();
+  }
+
+  void removeSocial(int index) {
+    if (index >= 0 && index < application.socialMedia.length) {
+      application.socialMedia.removeAt(index);
+      notifyListeners();
+    }
+  }
+
+  void updateSocial(int index, SocialMedia s) {
+    if (index >= 0 && index < application.socialMedia.length) {
+      application.socialMedia[index] = s;
+      notifyListeners();
+    }
+  }
+
   Future<bool> submit() async {
     setLoading(true);
     try {

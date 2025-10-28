@@ -29,10 +29,30 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
   final TextEditingController _kotaLhrCtrl = TextEditingController();
   final TextEditingController _pendidikanCtrl = TextEditingController();
 
+  // social media field controllers (keyed by index of social entry)
+  final Map<int, TextEditingController> _socialLinkControllers = {};
+  final Map<int, String?> _socialLinkErrors = {};
+
   @override
   void initState() {
     super.initState();
     // When using view model, initial population occurs there; keep local application for compatibility
+  }
+
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    _phoneCtrl.dispose();
+    _emailCtrl.dispose();
+    _jenisCtrl.dispose();
+    _agamaCtrl.dispose();
+    _tglLahirCtrl.dispose();
+    _kotaLhrCtrl.dispose();
+    _pendidikanCtrl.dispose();
+    for (final c in _socialLinkControllers.values) {
+      c.dispose();
+    }
+    super.dispose();
   }
 
   @override
@@ -141,6 +161,85 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
             controller: _pendidikanCtrl,
             decoration: const InputDecoration(labelText: 'Pendidikan Terakhir'),
             onChanged: (v) => vm.updateKeterangan(pendidikan: v),
+          ),
+          const SizedBox(height: 12),
+          const Text(
+            'Sosial Media (opsional)',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          vm.application.socialMedia.isEmpty
+              ? TextButton(
+              onPressed: vm.addSocial, child: const Text('Tambah Sosial Media'))
+              : Column(
+            children: vm.application.socialMedia
+                .asMap()
+                .entries
+                .map((entry) {
+              final index = entry.key;
+              final s = entry.value;
+              // ensure controller exists for this index
+              _socialLinkControllers.putIfAbsent(
+                  index, () => TextEditingController(text: s.link));
+              _socialLinkErrors.putIfAbsent(index, () => null);
+              return Card(
+                margin: const EdgeInsets.symmetric(vertical: 6),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Sosial ${index + 1}'),
+                          IconButton(
+                            onPressed: () => vm.removeSocial(index),
+                            icon: const Icon(Icons.delete),
+                          ),
+                        ],
+                      ),
+                      TextFormField(
+                        initialValue: s.platform,
+                        decoration: const InputDecoration(
+                            labelText: 'Platform (mis. Instagram)'),
+                        onChanged: (v) {
+                          s.platform = v;
+                          vm.updateSocial(index, s);
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        controller: _socialLinkControllers[index],
+                        decoration: InputDecoration(labelText: 'Link (URL)',
+                            errorText: _socialLinkErrors[index]),
+                        keyboardType: TextInputType.url,
+                        onChanged: (v) {
+                          s.link = v;
+                          // validate URL
+                          final ok = looksLikeUrl(v, allowEmpty: true);
+                          setState(() {
+                            _socialLinkErrors[index] =
+                            ok ? null : 'Masukkan URL yang valid (http/https)';
+                          });
+                          vm.updateSocial(index, s);
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        initialValue: s.username,
+                        decoration: const InputDecoration(
+                            labelText: 'Username (opsional)'),
+                        onChanged: (v) {
+                          s.username = v;
+                          vm.updateSocial(index, s);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }).toList(),
           ),
           const SizedBox(height: 12),
           Row(

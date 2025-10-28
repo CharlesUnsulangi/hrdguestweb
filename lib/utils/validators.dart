@@ -23,3 +23,16 @@ bool looksLikeEmail(String? value) {
   final dot = v.indexOf('.', at);
   return dot > at + 1 && dot < v.length - 1;
 }
+
+/// Returns true if [value] is a plausible http/https URL.
+/// If [allowEmpty] is true (default), empty/null is considered valid (useful for optional fields).
+bool looksLikeUrl(String? value, {bool allowEmpty = true}) {
+  if (value == null || value.trim().isEmpty) return allowEmpty;
+  final v = value.trim();
+  final uri = Uri.tryParse(v);
+  if (uri == null) return false;
+  if (!uri.hasScheme) return false;
+  final scheme = uri.scheme.toLowerCase();
+  if (!(scheme == 'http' || scheme == 'https')) return false;
+  return uri.host.isNotEmpty;
+}

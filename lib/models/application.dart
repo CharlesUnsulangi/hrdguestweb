@@ -1,4 +1,5 @@
 import 'package:hrdguestweb/models/interview_response.dart';
+import 'package:hrdguestweb/models/social_media.dart';
 import 'package:hrdguestweb/models/work_experience.dart';
 
 class Application {
@@ -18,6 +19,7 @@ class Application {
   List<WorkExperience> experiences;
   List<InterviewResponse>
   interviewResponses; // parallel to experiences by index
+  List<SocialMedia> socialMedia;
 
   Application({
     this.id = '',
@@ -32,8 +34,10 @@ class Application {
     this.pendidikanTerakhir = '',
     List<WorkExperience>? experiences,
     List<InterviewResponse>? interviewResponses,
+    List<SocialMedia>? socialMedia,
   }) : experiences = experiences ?? [],
-       interviewResponses = interviewResponses ?? [];
+       interviewResponses = interviewResponses ?? [],
+       socialMedia = socialMedia ?? [];
 
   Map<String, dynamic> toJson() => {
     'id': id,
@@ -48,6 +52,7 @@ class Application {
     'pendidikanTerakhir': pendidikanTerakhir,
     'experiences': experiences.map((e) => e.toJson()).toList(),
     'interviewResponses': interviewResponses.map((r) => r.toJson()).toList(),
+    'socialMedia': socialMedia.map((s) => s.toJson()).toList(),
   };
 
   factory Application.fromJson(Map<String, dynamic> json) => Application(
@@ -71,6 +76,11 @@ class Application {
             ?.map(
               (e) => InterviewResponse.fromJson(Map<String, dynamic>.from(e)),
             )
+            .toList() ??
+        [],
+    socialMedia:
+        (json['socialMedia'] as List<dynamic>?)
+            ?.map((s) => SocialMedia.fromJson(Map<String, dynamic>.from(s)))
             .toList() ??
         [],
   );
