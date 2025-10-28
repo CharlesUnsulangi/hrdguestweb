@@ -4,6 +4,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'screens/application_form.dart';
+import 'screens/contact_form.dart';
 import 'utils/safe_run.dart';
 import 'utils/validators.dart';
 
@@ -92,6 +94,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        '/contact': (context) => const ContactFormScreen(),
+        '/apply': (context) => const ApplicationFormScreen(role: 'staff'),
+        // default, but push with args
+      },
     );
   }
 }
@@ -216,6 +223,33 @@ class _MyHomePageState extends State<MyHomePage> {
                   }
                 },
                 child: const Text('Test safe action'),
+              ),
+              const SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/contact');
+                },
+                child: const Text('Buka Contact Form'),
+              ),
+              const SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) =>
+                      const ApplicationFormScreen(
+                          role: 'driver')));
+                },
+                child: const Text('Melamar sebagai Driver'),
+              ),
+              const SizedBox(height: 8),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) =>
+                      const ApplicationFormScreen(
+                          role: 'staff')));
+                },
+                child: const Text('Melamar sebagai Staff'),
               ),
             ],
           ),
