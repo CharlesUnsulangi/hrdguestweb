@@ -3,11 +3,10 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import 'screens/application_form.dart';
-import 'screens/contact_form.dart';
-import 'utils/safe_run.dart';
-import 'utils/validators.dart';
+import 'package:hrdguestweb/screens/application_form.dart';
+import 'package:hrdguestweb/screens/contact_form.dart';
+import 'package:hrdguestweb/utils/safe_run.dart';
+import 'package:hrdguestweb/utils/validators.dart';
 
 void main() {
   // Ensure binding initialized before setting handlers
@@ -95,9 +94,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
       routes: {
-        '/contact': (context) => const ContactFormScreen(),
         '/apply': (context) => const ApplicationFormScreen(role: 'staff'),
-        // default, but push with args
       },
     );
   }
@@ -227,7 +224,8 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(height: 12),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/contact');
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => ContactFormScreen()));
                 },
                 child: const Text('Buka Contact Form'),
               ),

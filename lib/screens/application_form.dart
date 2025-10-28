@@ -440,16 +440,22 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
               const Spacer(),
               ElevatedButton(
                 onPressed: () async {
+                  final BuildContext localContext = context;
+                  final scaffold = ScaffoldMessenger.of(localContext);
+                  final navigator = Navigator.of(localContext);
+
                   final ok = await vm.submit();
+                  if (!mounted) return; // ensure widget still mounted
+
                   if (ok) {
-                    ScaffoldMessenger.of(context).showSnackBar(
+                    scaffold.showSnackBar(
                       const SnackBar(
                         content: Text('Aplikasi berhasil dikirim'),
                       ),
                     );
-                    Navigator.of(context).pop();
+                    navigator.pop();
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
+                    scaffold.showSnackBar(
                       const SnackBar(content: Text('Gagal mengirim aplikasi')),
                     );
                   }
