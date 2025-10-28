@@ -1,0 +1,22 @@
+# Flutter/Dart
+.dart_tool/
+.packages
+.pub/
+build/
+flutter_*.png
+
+# Android/IntelliJ/VSCode
+*.iml
+.idea/
+.vscode/
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# Other
+pubspec.lock
+
+# Optional: local secrets
+.env
+
