@@ -14,9 +14,5 @@ flutter_*.png
 .DS_Store
 Thumbs.db
 
-# Other
-pubspec.lock
-
 # Optional: local secrets
 .env
-
